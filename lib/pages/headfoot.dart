@@ -11,7 +11,7 @@ class CurvePage extends StatefulWidget {
 
 class _CurvePageState extends State<CurvePage> {
   int _currentIndex = 0;
-  final tabs = [HomePage(), colPage(), AboutPage()];
+  final tabs = [HomePage(), collectionPage(), AboutPage()];
 
   @override
   Widget build(BuildContext context) {

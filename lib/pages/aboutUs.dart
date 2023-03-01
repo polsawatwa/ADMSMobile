@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 
-class aboutUsPage extends StatefulWidget {
+class AboutPage extends StatefulWidget {
   //const ContactPage({ Key? key }) : super(key: key);
 
   @override
-  _aboutUsPageState createState() => _aboutUsPageState();
+  _AboutPageState createState() => _AboutPageState();
 }
-class _aboutUsPageState extends State<aboutUsPage> {
+class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Center(
-          child: Column(
-            children: [
-              Text ("Naphawan Chaichuen"),
-              Text ("StudentID : 63160243")
-            ],
+        Container(
+          alignment: Alignment.topLeft,
+          padding: EdgeInsets.only(left: 16, top: 16),
+          child: Text(
+            "เกี่ยวกับเรา",
+            style: TextStyle(fontSize: 25, fontFamily: 'Prompt'),
           ),
-        )
+        ),
       ],
-     
     );
   }
 }
