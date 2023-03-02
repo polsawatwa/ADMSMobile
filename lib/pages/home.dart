@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'headfoot.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -12,9 +13,25 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Center(
-          child: Text("This is HomePage") ,
-        )
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CurvePage()),
+            );
+          },
+          child: Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              // color: Colors.blue,
+              // borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              "Go to CurvePage",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
       ],
     );
   }
