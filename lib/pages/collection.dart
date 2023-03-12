@@ -1,375 +1,300 @@
+import 'dart:math';
+import 'add.dart';
+import 'edit.dart';
+import 'delete.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+
+enum PopupItem { update, delete }
+
+enum ItemState { create, update, delete }
 
 class collectionPage extends StatefulWidget {
-  const collectionPage({Key? key}) : super(key: key);
+  const collectionPage({super.key});
 
   @override
-  _collectionPageState createState() => _collectionPageState();
+  State<collectionPage> createState() => _collectionPageState();
 }
 
 class _collectionPageState extends State<collectionPage> {
-  // Define a list of products
-  final List<Product> products = [
-    Product(
-      name: "Product 1",
-      imageUrl: "https://via.placeholder.com/300",
-      description: "Description for Product 1",
-    ),
-    Product(
-      name: "Product 2",
-      imageUrl: "https://via.placeholder.com/300",
-      description: "Description for Product 2",
-    ),
-    Product(
-      name: "Product 3",
-      imageUrl: "https://via.placeholder.com/300",
-      description: "Description for Product 3",
-    ),
-    Product(
-      name: "Product 4",
-      imageUrl: "https://via.placeholder.com/300",
-      description: "Description for Product 4",
-    ),
-    Product(
-      name: "Product 5",
-      imageUrl: "https://via.placeholder.com/300",
-      description: "Description for Product 5",
-    ),
-    Product(
-      name: "Product 6",
-      imageUrl: "https://via.placeholder.com/300",
-      description: "Description for Product 6",
-    ),
-  ];
+  late dynamic numbersList;
+  bool deleteNotification = false;
+  bool createNotification = false;
+  bool updateNotification = false;
+  List itemList = [];
 
-  // Define a controller for the new product form
-  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _formKey = GlobalKey<FormState>();
-
-  // Define variables to hold the values entered in the form
-  // String? _newProductName;
-  // String? _newProductImageUrl;
-  // String? _newProductDescription;
-  late String _newProductName;
-  late String _newProductImageUrl;
-  late String _newProductDescription;
-
-  void _addProduct() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Add Product"),
-          content: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Name",
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter a product name";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _newProductName = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Image URL",
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter an image URL";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _newProductImageUrl = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Description",
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter a product description";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _newProductDescription = value!;
-                  },
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Validate the form
-                if (_formKey.currentState!.validate()) {
-                  // Save the form values
-                  _formKey.currentState!.save();
-                  // Add the new product to the list
-                  setState(() {
-                    products.add(
-                      Product(
-                        name: _newProductName,
-                        imageUrl: _newProductImageUrl,
-                        description: _newProductDescription,
-                      ),
-                    );
-                  });
-                  // Close the modal pop-up
-                  Navigator.pop(context);
-                }
-              },
-              child: Text("Add"),
-            ),
-          ],
-        );
-      },
-    );
+  /// Get Data
+  Future getData() async {
+    final url = Uri.parse('http://127.0.0.1:8000/api/all-todolist/');
+    final response = await http.get(url);
+    final result = jsonDecode(response.body);
+    if (response.statusCode != 200) {
+      throw Exception("Error Can not fetch data !!!");
+    }
+    return result;
   }
 
-  void _pipelineEditProduct(Product product, String newName, String newImageUrl, String newDescription) {
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  /// Rebuild Widget
+  void rebuildAllChildren(BuildContext context) {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+
+    (context as Element).visitChildren(rebuild);
+  }
+
+  /// Refresh data
+  Future<void> _pullRefresh() async {
+    List<String> freshNumbers = await NumberGenerator().slowNumbers();
     setState(() {
-      product.name = newName;
-      product.imageUrl = newImageUrl;
-      product.description = newDescription;
+      numbersList = freshNumbers;
     });
   }
 
-  void _editProduct(Product product) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Edit Product"),
-          content: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Name",
-                  ),
-                  initialValue: product.name,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter a product name";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    product.name = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Image URL",
-                  ),
-                  initialValue: product.imageUrl,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter an image URL";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    product.imageUrl = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Description",
-                  ),
-                  initialValue: product.description,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter a product description";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    product.description = value!;
-                  },
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Validate the form
-                if (_formKey.currentState!.validate()) {
-                  // Save the form values
-                  _formKey.currentState!.save();
-                  _pipelineEditProduct(product, product.name, product.imageUrl, product.description);
-                  // Close the modal pop-up
-                  Navigator.pop(context);
-                }
-              },
-              child: Text("Save"),
-            ),
-            TextButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text("Confirm Deletion"),
-                      content: Text(
-                        "Are you sure you want to delete this item?",
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Cancel"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              products.remove(product);
-                            });
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
-                          child: Text("Delete"),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: Text(
-                "Delete",
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ],
-        );
-      },
-    );
+  /// Set alert state
+  Future<void> setAlertTimeOut(ItemState itemState) async {
+    switch (itemState) {
+      case ItemState.delete:
+        setState(() {
+          deleteNotification = true;
+        });
+        await Future.delayed(const Duration(milliseconds: 5000), () {
+          setState(() {
+            deleteNotification = false;
+          });
+        });
+        break;
+      case ItemState.create:
+        setState(() {
+          createNotification = true;
+        });
+        await Future.delayed(const Duration(milliseconds: 5000), () {
+          setState(() {
+            createNotification = false;
+          });
+        });
+        break;
+      case ItemState.update:
+        setState(() {
+          updateNotification = true;
+        });
+        await Future.delayed(const Duration(milliseconds: 5000), () {
+          setState(() {
+            updateNotification = false;
+          });
+        });
+        break;
+      default:
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    rebuildAllChildren(context);
     return Scaffold(
       // appBar: AppBar(
-      //   title: Text("Product Collection"),
+      //   title: const Text("Data Lists"),
       // ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  children: List.generate(products.length, (index) {
-                    return GestureDetector(
-                      onTap: () {
-                        _editProduct(products[index]);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image:
-                                        NetworkImage(products[index].imageUrl),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: EdgeInsets.all(5.0),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      products[index].name,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      products[index].description,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              ),
-            ],
-          ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final reload = await Navigator.push(context, MaterialPageRoute(builder: (context) => const AddPage()));
+          if (reload == null) return;
+          if (reload) {
+            _pullRefresh();
+            setAlertTimeOut(ItemState.create);
+          }
+        },
+        child: const Icon(
+          Icons.add,
+          color: Color(0xffffffff),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _addProduct();
-        },
-        child: Icon(Icons.add),
+      body: Stack(
+        children: [
+          RefreshIndicator(
+            onRefresh: _pullRefresh,
+            child: FutureBuilder(
+              builder: (context, AsyncSnapshot? snapshot) {
+                return ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    if (snapshot?.data != null) {
+                      return listData(
+                        snapshot?.data[index]["id"],
+                        snapshot?.data[index]["title"],
+                        snapshot?.data[index]["sub_title"],
+                        snapshot?.data[index]["image_url"],
+                        snapshot?.data[index]["detail"],
+                      );
+                    }
+                    return snapshot?.data[index][""];
+                    // return null;
+                  },
+                  itemCount: (snapshot?.data?.length == null) ? 0 : snapshot?.data?.length,
+                );
+              },
+              future: getData(),
+            ),
+          ),
+          (deleteNotification) ? notification("Deleting 1 item.") : const SizedBox(height: 0),
+          (updateNotification) ? notification("Updating 1 item.") : const SizedBox(height: 0),
+          (createNotification) ? notification("Adding 1 item.") : const SizedBox(height: 0),
+        ],
+      ),
+    );
+  }
+
+  /// ListTile Data
+  Widget listData(int id, String title, String sub_title, String image_url, String detail) {
+    return Card(
+      child: ListTile(
+        leading: const FlutterLogo(),
+        title: Text(
+          title,
+          maxLines: 1,
+        ),
+        subtitle: Text(
+          detail,
+          maxLines: 2,
+        ),
+        trailing: popupMenu(id, title, sub_title, image_url, detail),
+      ),
+    );
+  }
+
+  /// Button Menu
+  Widget buttonMenu(int id, String title, String sub_title, String image_url, String detail) {
+    return Wrap(
+      spacing: 0, // space between two icons
+      children: <Widget>[
+        IconButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => UpdatePage(id, title, sub_title, image_url, detail)));
+          },
+          icon: const Icon(Icons.more_vert),
+        ),
+        IconButton(
+          onPressed: () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => DPage(id)));
+          },
+          icon: const Icon(Icons.delete),
+        ),
+      ],
+    );
+  }
+
+  /// Popup Menu
+  Widget popupMenu(int id, String title, String sub_title, String image_url, String detail) {
+    return PopupMenuButton<PopupItem>(
+      tooltip: "",
+      onSelected: (PopupItem item) async {
+        switch (item) {
+          case PopupItem.update:
+            final reload =
+                await Navigator.push(context, MaterialPageRoute(builder: (context) => UpdatePage(id, title, sub_title, image_url, detail)));
+            if (reload == null) return;
+            if (reload) {
+              _pullRefresh();
+              setAlertTimeOut(ItemState.update);
+            }
+            break;
+          case PopupItem.delete:
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                content: Text(
+                  'Delete "$title"',
+                  style: const TextStyle(fontSize: 14),
+                  maxLines: 2,
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, 'Cancel');
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      try {
+                        await DeletePage().deleteTodo(id).then((value) {
+                          _pullRefresh();
+                          setAlertTimeOut(ItemState.delete);
+                          Navigator.pop(context, 'OK');
+                        });
+                      } catch (e) {
+                        setState(() {
+                          deleteNotification = false;
+                        });
+                        Navigator.pop(context, 'OK');
+                      }
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            break;
+          default:
+        }
+      },
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<PopupItem>>[
+        const PopupMenuItem<PopupItem>(
+          value: PopupItem.update,
+          child: Text('Update'),
+        ),
+        const PopupMenuItem<PopupItem>(
+          value: PopupItem.delete,
+          child: Text('Delete'),
+        ),
+      ],
+    );
+  }
+
+  /// Notification
+  Widget notification(String text) {
+    return Positioned(
+      bottom: 15,
+      left: 15,
+      child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width - 30,
+          height: 35,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: const Color(0xff333333),
+          ),
+          padding: const EdgeInsets.only(top: 8, bottom: 7, left: 11),
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Color(0xffffffff),
+              fontSize: 12,
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
-class Product {
-  String name;
-  String imageUrl;
-  String description;
+/// Generate number
+class NumberGenerator {
+  Future<List<String>> slowNumbers() async {
+    return Future.delayed(
+      const Duration(milliseconds: 1),
+      () => numbers,
+    );
+  }
 
-  Product({required this.name, required this.imageUrl, required this.description});
+  List<String> get numbers => List.generate(5, (index) => number);
 
-  String get _name => name;
-  set _name(String value) => name = value;
-  String get _imageUrl => imageUrl;
-  set _imageUrl(String value) => imageUrl = value;
-  String get _description => imageUrl;
-  set _description(String value) => description = value;
+  String get number => Random().nextInt(99999).toString();
 }
