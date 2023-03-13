@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:math';
 import 'add.dart';
 import 'edit.dart';
 import 'delete.dart';
+import 'detail.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +21,7 @@ class collectionPage extends StatefulWidget {
 
 class _collectionPageState extends State<collectionPage> {
   late dynamic numbersList;
+  bool userType = true;
   bool deleteNotification = false;
   bool createNotification = false;
   bool updateNotification = false;
@@ -103,9 +106,10 @@ class _collectionPageState extends State<collectionPage> {
       // appBar: AppBar(
       //   title: const Text("Data Lists"),
       // ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: userType ? FloatingActionButton(
         onPressed: () async {
-          final reload = await Navigator.push(context, MaterialPageRoute(builder: (context) => const AddPage()));
+          final reload = await Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddPage()));
           if (reload == null) return;
           if (reload) {
             _pullRefresh();
@@ -116,89 +120,124 @@ class _collectionPageState extends State<collectionPage> {
           Icons.add,
           color: Color(0xffffffff),
         ),
-      ),
+      ): null,
       body: Stack(
         children: [
           RefreshIndicator(
             onRefresh: _pullRefresh,
             child: FutureBuilder(
               builder: (context, AsyncSnapshot? snapshot) {
-                return ListView.builder(
+                if (snapshot?.data == null) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
                   itemBuilder: (BuildContext context, int index) {
-                    if (snapshot?.data != null) {
-                      return listData(
-                        snapshot?.data[index]["id"],
-                        snapshot?.data[index]["title"],
-                        snapshot?.data[index]["sub_title"],
-                        snapshot?.data[index]["image_url"],
-                        snapshot?.data[index]["detail"],
-                      );
-                    }
-                    return snapshot?.data[index][""];
-                    // return null;
+                    return collectionData(
+                      snapshot?.data[index]["id"],
+                      snapshot?.data[index]["title"],
+                      snapshot?.data[index]["sub_title"],
+                      snapshot?.data[index]["image_url"],
+                      snapshot?.data[index]["detail"],
+                    );
                   },
-                  itemCount: (snapshot?.data?.length == null) ? 0 : snapshot?.data?.length,
+                  itemCount: snapshot?.data?.length ?? 0,
                 );
               },
               future: getData(),
             ),
           ),
-          (deleteNotification) ? notification("Deleting 1 item.") : const SizedBox(height: 0),
-          (updateNotification) ? notification("Updating 1 item.") : const SizedBox(height: 0),
-          (createNotification) ? notification("Adding 1 item.") : const SizedBox(height: 0),
+          (deleteNotification)
+              ? notification("Deleting 1 item.")
+              : const SizedBox(height: 0),
+          (updateNotification)
+              ? notification("Updating 1 item.")
+              : const SizedBox(height: 0),
+          (createNotification)
+              ? notification("Adding 1 item.")
+              : const SizedBox(height: 0),
         ],
       ),
     );
   }
 
   /// ListTile Data
-  Widget listData(int id, String title, String sub_title, String image_url, String detail) {
-    return Card(
-      child: ListTile(
-        leading: const FlutterLogo(),
-        title: Text(
-          title,
-          maxLines: 1,
+  Widget collectionData(int id, String title, String sub_title, String image_url, String detail) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPage(id: id),
+          ),
+        );
+      },
+      child: Card(
+        child: Column(
+          children: [
+            Expanded(
+              child: Image.network(
+                '${image_url}',
+                fit: BoxFit.cover,
+              ),
+            ),
+            ListTile(
+              title: Text(
+                title,
+                maxLines: 1,
+              ),
+              subtitle: Text(
+                sub_title,
+                maxLines: 2,
+              ),
+              trailing: userType ? popupMenu(id, title, sub_title, image_url, detail) : null,
+            ),
+          ],
         ),
-        subtitle: Text(
-          detail,
-          maxLines: 2,
-        ),
-        trailing: popupMenu(id, title, sub_title, image_url, detail),
       ),
     );
   }
 
   /// Button Menu
-  Widget buttonMenu(int id, String title, String sub_title, String image_url, String detail) {
-    return Wrap(
-      spacing: 0, // space between two icons
-      children: <Widget>[
-        IconButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => UpdatePage(id, title, sub_title, image_url, detail)));
-          },
-          icon: const Icon(Icons.more_vert),
-        ),
-        IconButton(
-          onPressed: () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => DPage(id)));
-          },
-          icon: const Icon(Icons.delete),
-        ),
-      ],
-    );
-  }
+  // Widget buttonMenu(
+  //     int id, String title, String sub_title, String image_url, String detail) {
+  //   return Wrap(
+  //     spacing: 0, // space between two icons
+  //     children: <Widget>[
+  //       IconButton(
+  //         onPressed: () {
+  //           Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                   builder: (context) =>
+  //                       UpdatePage(id, title, sub_title, image_url, detail)));
+  //         },
+  //         icon: const Icon(Icons.more_vert),
+  //       ),
+  //       IconButton(
+  //         onPressed: () {
+  //           // Navigator.push(context, MaterialPageRoute(builder: (context) => DPage(id)));
+  //         },
+  //         icon: const Icon(Icons.delete),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   /// Popup Menu
-  Widget popupMenu(int id, String title, String sub_title, String image_url, String detail) {
+  Widget popupMenu(
+      int id, String title, String sub_title, String image_url, String detail) {
     return PopupMenuButton<PopupItem>(
       tooltip: "",
       onSelected: (PopupItem item) async {
         switch (item) {
           case PopupItem.update:
-            final reload =
-                await Navigator.push(context, MaterialPageRoute(builder: (context) => UpdatePage(id, title, sub_title, image_url, detail)));
+            final reload = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        UpdatePage(id, title, sub_title, image_url, detail)));
             if (reload == null) return;
             if (reload) {
               _pullRefresh();
@@ -248,7 +287,7 @@ class _collectionPageState extends State<collectionPage> {
       itemBuilder: (BuildContext context) => <PopupMenuEntry<PopupItem>>[
         const PopupMenuItem<PopupItem>(
           value: PopupItem.update,
-          child: Text('Update'),
+          child: Text('Edit'),
         ),
         const PopupMenuItem<PopupItem>(
           value: PopupItem.delete,
@@ -297,4 +336,42 @@ class NumberGenerator {
   List<String> get numbers => List.generate(5, (index) => number);
 
   String get number => Random().nextInt(99999).toString();
+}
+
+class DetailScreen extends StatelessWidget {
+  final String title;
+  final String image_url;
+  final String detail;
+
+  DetailScreen(
+      {required this.title, required this.image_url, required this.detail});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Image.network(
+              image_url,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              detail,
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

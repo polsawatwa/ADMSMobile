@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                 password.text = 'Spa#1478';
                 setUsername(username.text);
                 setPassword(password.text);
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => CurvePage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CurvePage()));
               });
             } else {
               print("wrong username or password");

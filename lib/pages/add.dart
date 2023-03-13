@@ -21,7 +21,8 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("AddPage"),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: Text("Add Page"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -82,7 +83,7 @@ class _AddPageState extends State<AddPage> {
                 }, 
                 child: Text("เพิ่มรายการ"),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                  backgroundColor: MaterialStateProperty.all(Colors.indigoAccent[100]),
                   padding: MaterialStateProperty.all(
                     EdgeInsets.fromLTRB(50, 20, 50, 20)
                   ),

@@ -39,7 +39,8 @@ class _UpdatePageState extends State<UpdatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("UpdatePage"),
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text("Edit Page"),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -99,7 +100,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   },
                   child: Text("แก้ไขรายการ"),
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                    backgroundColor: MaterialStateProperty.all(Colors.deepPurple[300]),
                     padding: MaterialStateProperty.all(
                         EdgeInsets.fromLTRB(50, 20, 50, 20)),
                     textStyle:
