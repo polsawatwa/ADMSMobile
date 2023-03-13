@@ -99,7 +99,7 @@ class _AddPageState extends State<AddPage> {
 
     Future postTodo() async {
     //http://10.80.74.246:8080/api/v3/user
-    var url = Uri.parse('http://localhost:8000/api/post-todolist/');
+    var url = Uri.parse('http://localhost:8000/api/add-todolist/');
     //ประเภทของ Data ที่เราจะส่งไป เป็นแบบ json
     Map<String, String> header = {"Content-type": "application/json"};
     //Data ที่จะส่ง

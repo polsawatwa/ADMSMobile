@@ -20,42 +20,37 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.all(15.0),
       child: Scaffold(
           body: ListView(children: [
-        // Text(
-        //   'Login',
-        //   style: const TextStyle(
-        //       fontWeight: FontWeight.bold,
-        //       color: Colors.blueGrey,
-        //       fontSize: 30),
-        //   textAlign: TextAlign.center,
-        // ),
-        SizedBox(height: 30),
+    Text(
+              'Login',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 50,
+                fontFamily: 'Prompt',
+              ),
+              textAlign: TextAlign.center,
+            ),
         Image.network(
-          'https://cdn-icons-png.flaticon.com/512/295/295128.png',
-          height: 150,
-          width: 150,
+          'https://cdn-icons-png.flaticon.com/512/2170/2170153.png',
+          height: 300,
+          width: 300,
         ),
         
-        SizedBox(height: 30),
-        Text(
-          'Login',
-          style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.blueGrey,
-              fontSize: 30),
-          textAlign: TextAlign.center,
-        ),
+    
         SizedBox(height: 30),
         TextField(
             controller: username,
             decoration: InputDecoration(
-                labelText: 'UserName', border: OutlineInputBorder())),
+               prefixIcon: Icon(Icons.account_circle),
+                labelText: 'Username', border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),))),
         SizedBox(height: 15),
         TextField(
             controller: password,
             obscureText: true,
             decoration: InputDecoration(
-                labelText: 'Password', border: OutlineInputBorder())),
-        SizedBox(height: 15),
+         prefixIcon: Icon(Icons.key),
+                labelText: 'Password', border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0),))),
+        SizedBox(height: 10),
         ElevatedButton(
           onPressed: () {
             if (username.text == 'super_admin' && password.text == 'Spa#1478') {
@@ -72,27 +67,27 @@ class _LoginPageState extends State<LoginPage> {
             }
             
           },
-          child: Text("Login"),
+          child: Text('เข้าสู่ระบบ', style: TextStyle(fontFamily: 'Prompt')),
           style: ButtonStyle(
+             fixedSize: MaterialStateProperty.all<Size>(
+      Size(200, 50),
+    ),shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                side: MaterialStateProperty.all<BorderSide>(
+                  BorderSide(
+                    width: 2,
+                    color: Color.fromARGB(255, 96, 125,139),
+                  ),
+                ),
               backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
               padding: MaterialStateProperty.all(
                   EdgeInsets.fromLTRB(50, 20, 50, 20)),
-              textStyle: MaterialStateProperty.all(TextStyle(fontSize: 30))),
+              textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20))),
         ),
-        SizedBox(height: 15),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) =>  CurvePage()));
-          },
-          child: Text("เข้าสู่ระบบโดยไม่มีบัญชี"),
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
-              padding: MaterialStateProperty.all(
-                  EdgeInsets.fromLTRB(50, 20, 50, 20)),
-              textStyle: MaterialStateProperty.all(TextStyle(fontSize: 30))),
-        ),
-
-        // SizedBox(height: 30),
+       
       ])),
     );
   }

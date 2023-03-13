@@ -1,9 +1,7 @@
-import 'package:admsmobile/pages/login.dart';
+import 'package:admsmobile/pages/welcome.dart';
 import 'package:flutter/material.dart';
-import 'pages/collection.dart';
-import 'pages/aboutUs.dart';
-import 'pages/home.dart';
-import 'pages/login.dart';
+
+
 
 void main() {
   runApp(MyApp());
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xff7286D3),
         brightness: Brightness.light,
       ),
-      home: LoginPage(),
+      home: WelcomePage(),
       
     );
   }

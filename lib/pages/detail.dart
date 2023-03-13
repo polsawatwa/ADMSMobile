@@ -26,7 +26,7 @@ class _DetailPageState extends State<DetailPage> {
   Future<void> fetchData() async {
     try {
       final response = await http.get(
-          Uri.parse('http://127.0.0.1:8000/api/all-todolist/${widget.id}'));
+          Uri.parse('http://127.0.0.1:8000/api/detail-collection/${widget.id}'));
       final data = jsonDecode(response.body);
       setState(() {
         title = data['title'];

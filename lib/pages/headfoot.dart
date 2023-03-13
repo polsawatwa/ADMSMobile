@@ -4,7 +4,6 @@ import 'aboutUs.dart';
 import 'home.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-
 class CurvePage extends StatefulWidget {
   @override
   State<CurvePage> createState() => _CurvePageState();
@@ -26,8 +25,7 @@ class _CurvePageState extends State<CurvePage> {
               height: 50,
             ),
             SizedBox(width: 8),
-            Text("ADMS",style: TextStyle(fontSize: 20, fontFamily: 'Prompt'),),
-          
+            Text("ADMS",style: TextStyle(fontSize: 20, fontFamily: 'Prompt'),),        
           ],
         ),
       ),
