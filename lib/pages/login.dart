@@ -35,14 +35,16 @@ class _LoginPageState extends State<LoginPage> {
               textAlign: TextAlign.center,
             ),
             Image.network(
-              'https://cdn-icons-png.flaticon.com/512/2170/2170153.png',
-              height: 300,
-              width: 300,
+              'https://cdn-icons-png.flaticon.com/512/4545/4545114.png',
+              height: 200,
+              width: 200,
             ),
             SizedBox(height: 30),
             TextField(
                 controller: username,
                 decoration: InputDecoration(
+                  filled: true,
+    fillColor: Colors.white,
                     prefixIcon: Icon(Icons.account_circle),
                     labelText: 'Username',
                     border: OutlineInputBorder(
@@ -52,13 +54,14 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
                 controller: password,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: InputDecoration(filled: true,
+    fillColor: Colors.white,
                     prefixIcon: Icon(Icons.key),
                     labelText: 'Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ))),
-            SizedBox(height: 10),
+            SizedBox(height: 30),
             ElevatedButton(
               onPressed: () async {
                 // Send a GET request to the API endpoint to retrieve user data
@@ -83,34 +86,32 @@ class _LoginPageState extends State<LoginPage> {
                     });
                   } else {
                     print('Invalid username or password');
+                     ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Wrong username or password.'),
+          backgroundColor: Colors.red,
+        ),
+        );
                   }
                 } else {
+
                   print("wrong username or password");
                   print('Failed to retrieve user data from the API');
                 }
               },
+              
               child:
-                  Text('เข้าสู่ระบบ', style: TextStyle(fontFamily: 'Prompt')),
+                  Text('เข้าสู่ระบบ', style: TextStyle(fontFamily: 'Prompt', fontSize: 20)),
               style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all<Size>(
-                    Size(200, 50),
-                  ),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  side: MaterialStateProperty.all<BorderSide>(
-                    BorderSide(
-                      width: 2,
-                      color: Color.fromARGB(255, 96, 125, 139),
-                    ),
-                  ),
-                  backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
+                  backgroundColor: MaterialStateProperty.all(Color(0xFFFF6F00)),
                   padding: MaterialStateProperty.all(
                       EdgeInsets.fromLTRB(50, 20, 50, 20)),
-                  textStyle:
-                      MaterialStateProperty.all(TextStyle(fontSize: 15))),
+                 ),
             ),
             SizedBox(height: 15),
             ElevatedButton(
@@ -122,32 +123,18 @@ class _LoginPageState extends State<LoginPage> {
                 'ย้อนกลับ',
                 style: TextStyle(
                   fontFamily: 'Prompt',
-                  fontSize: 20,
+                  fontSize: 20,color: Colors.black,
                 ),
               ),
               style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all<Size>(
-                  Size(200, 50),
-                ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                side: MaterialStateProperty.all<BorderSide>(
-                  BorderSide(
-                    width: 2,
-                    color: Color.fromARGB(255, 96, 125, 139),
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
+                backgroundColor: MaterialStateProperty.all(Color(0xFFF9FBE7)),
                 padding: MaterialStateProperty.all(
                   EdgeInsets.fromLTRB(50, 20, 50, 20),
-                ),
-                textStyle: MaterialStateProperty.all(
-                  TextStyle(
-                    fontSize: 20,
-                  ),
                 ),
               ),
             )

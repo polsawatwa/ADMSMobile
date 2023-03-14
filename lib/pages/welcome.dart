@@ -57,14 +57,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                side: MaterialStateProperty.all<BorderSide>(
-                  BorderSide(
-                    width: 2,
-                    color: Color(0xFFFF6F00),
-                  ),
-                ),
-      
-                textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15)),
+                
               ),
             ),
             SizedBox(height: 20),
@@ -77,11 +70,12 @@ class _WelcomePageState extends State<WelcomePage> {
               },
               child: Text(
                 'เข้าสู่ระบบโดยไม่มีบัญชี',
-                style: TextStyle(fontSize: 20, fontFamily: 'Prompt', color: Color.fromARGB(255, 0, 0, 0)),
+                style: TextStyle(fontSize: 20, fontFamily: 'Prompt', color: Colors.black),
               ),
               style: ButtonStyle(
+                
                  fixedSize: MaterialStateProperty.all<Size>(
-      Size(200, 50),
+      Size(50, 50),
     ),
                 backgroundColor:
                     MaterialStateProperty.all<Color>(Color(0xFFF9FBE7)),
@@ -90,14 +84,6 @@ class _WelcomePageState extends State<WelcomePage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                side: MaterialStateProperty.all<BorderSide>(
-                  BorderSide(
-                    width: 2,
-                    color: Color(0xFFF9FBE7),
-                  ),
-                ),
-               
-                textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15)),
               ),
             ),
           ],
