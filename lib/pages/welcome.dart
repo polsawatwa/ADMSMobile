@@ -12,16 +12,17 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(15.0),
       child: Scaffold(
+        backgroundColor: Color(0xFF7286D3),
         body: ListView(
           children: [
             Text(
               'WELCOME',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.blueGrey,
+                color: Color.fromARGB(255, 255, 255, 255),
                 fontSize: 50,
                 fontFamily: 'Prompt',
               ),
@@ -29,9 +30,9 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
             SizedBox(height: 50),
             Image.network(
-              'https://sv1.picz.in.th/images/2023/03/13/ePBskq.png',
-              height: 300,
-              width: 350,
+              'https://media.discordapp.net/attachments/803213415094681640/1077938339497398272/logo5.png?width=1038&height=456',
+              height: 250,
+              width: 250,
             ),
             SizedBox(height: 50),
             OutlinedButton(
@@ -43,13 +44,13 @@ class _WelcomePageState extends State<WelcomePage> {
               },
               child: Text(
                 'เข้าสู่ระบบ',
-                style: TextStyle(fontSize: 20, fontFamily: 'Prompt', color: Colors.white),
+                style: TextStyle(fontSize: 20, fontFamily: 'Prompt', color: Color.fromARGB(255, 255, 255, 255)),
               ),
               style: ButtonStyle(
                  fixedSize: MaterialStateProperty.all<Size>(
       Size(200, 50),
     ),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blueGrey),
+                backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFFF6F00)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -58,7 +59,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 side: MaterialStateProperty.all<BorderSide>(
                   BorderSide(
                     width: 2,
-                    color: Color.fromARGB(255, 96, 125,139),
+                    color: Color(0xFFFF6F00),
                   ),
                 ),
       
@@ -75,14 +76,14 @@ class _WelcomePageState extends State<WelcomePage> {
               },
               child: Text(
                 'เข้าสู่ระบบโดยไม่มีบัญชี',
-                style: TextStyle(fontSize: 20, fontFamily: 'Prompt', color: Color.fromARGB(255, 85, 85, 85)),
+                style: TextStyle(fontSize: 20, fontFamily: 'Prompt', color: Color.fromARGB(255, 0, 0, 0)),
               ),
               style: ButtonStyle(
                  fixedSize: MaterialStateProperty.all<Size>(
       Size(200, 50),
     ),
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(Color.fromARGB(255, 186, 226, 246)),
+                    MaterialStateProperty.all<Color>(Color(0xFFF9FBE7)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -91,7 +92,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 side: MaterialStateProperty.all<BorderSide>(
                   BorderSide(
                     width: 2,
-                    color: Color.fromARGB(255, 186, 226, 246),
+                    color: Color(0xFFF9FBE7),
                   ),
                 ),
                
