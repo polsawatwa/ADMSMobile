@@ -64,6 +64,12 @@ class _LoginPageState extends State<LoginPage> {
               });
             } else {
               print("wrong username or password");
+               ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Wrong username or password.'),
+          backgroundColor: Colors.red,
+        ),
+      );
             }
             
           },
