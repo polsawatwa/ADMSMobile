@@ -13,9 +13,10 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15.0),
+       color: Color(0xFF7286D3),
+      
       child: Scaffold(
-        backgroundColor: Color(0xFF7286D3),
+        backgroundColor: Colors.transparent,
         body: ListView(
           children: [
             Text(
@@ -31,8 +32,8 @@ class _WelcomePageState extends State<WelcomePage> {
             SizedBox(height: 50),
             Image.network(
               'https://media.discordapp.net/attachments/803213415094681640/1077938339497398272/logo5.png?width=1038&height=456',
-              height: 250,
-              width: 250,
+              height: 150,
+              width: 150,
             ),
             SizedBox(height: 50),
             OutlinedButton(

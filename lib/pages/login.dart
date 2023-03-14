@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'headfoot.dart';
+import 'welcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,9 +17,11 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
+    return Container(
+       color: Color(0xFF7286D3),
+
       child: Scaffold(
+        backgroundColor: Colors.transparent,
           body: ListView(children: [
     Text(
               'Login',
@@ -91,9 +94,47 @@ class _LoginPageState extends State<LoginPage> {
               backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
               padding: MaterialStateProperty.all(
                   EdgeInsets.fromLTRB(50, 20, 50, 20)),
-              textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20))),
+              textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
         ),
-       
+         SizedBox(height: 15),
+       ElevatedButton(
+  onPressed: () {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage()));
+  },
+  child: Text(
+    'ย้อนกลับ',
+    style: TextStyle(
+      fontFamily: 'Prompt',
+      fontSize: 20,
+    ),
+  ),
+  style: ButtonStyle(
+    fixedSize: MaterialStateProperty.all<Size>(
+      Size(200, 50),
+    ),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+    ),
+    side: MaterialStateProperty.all<BorderSide>(
+      BorderSide(
+        width: 2,
+        color: Color.fromARGB(255, 96, 125, 139),
+      ),
+    ),
+    backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
+    padding: MaterialStateProperty.all(
+      EdgeInsets.fromLTRB(50, 20, 50, 20),
+    ),
+    textStyle: MaterialStateProperty.all(
+      TextStyle(
+        fontSize: 20,
+      ),
+    ),
+  ),
+)
+
       ])),
     );
   }
