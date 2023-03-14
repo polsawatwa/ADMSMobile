@@ -72,7 +72,7 @@ class _AddPageState extends State<AddPage> {
                   print('image_url: ${image_url.text}');
                   print('detail: ${detail.text}');
                   print('-----------');
-                  postTodo();
+                  postCollection();
                   print('-----------');
                   setState(() {
                     title.clear();
@@ -80,6 +80,7 @@ class _AddPageState extends State<AddPage> {
                     image_url.clear();
                     detail.clear();
                   });
+                  Navigator.pop(context);
                 }, 
                 child: Text("เพิ่มรายการ"),
                 style: ButtonStyle(
@@ -97,9 +98,9 @@ class _AddPageState extends State<AddPage> {
     );
   }
 
-    Future postTodo() async {
+    Future postCollection() async {
     //http://10.80.74.246:8080/api/v3/user
-    var url = Uri.parse('http://localhost:8000/api/add-todolist/');
+    var url = Uri.parse('http://localhost:8000/api/add-collection/');
     //ประเภทของ Data ที่เราจะส่งไป เป็นแบบ json
     Map<String, String> header = {"Content-type": "application/json"};
     //Data ที่จะส่ง

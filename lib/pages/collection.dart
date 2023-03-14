@@ -29,7 +29,7 @@ class _collectionPageState extends State<collectionPage> {
 
   /// Get Data
   Future getData() async {
-    final url = Uri.parse('http://127.0.0.1:8000/api/all-todolist/');
+    final url = Uri.parse('http://127.0.0.1:8000/api/all-collection/');
     final response = await http.get(url);
     final result = jsonDecode(response.body);
     if (response.statusCode != 200) {
@@ -238,6 +238,7 @@ class _collectionPageState extends State<collectionPage> {
                 MaterialPageRoute(
                     builder: (context) =>
                         UpdatePage(id, title, sub_title, image_url, detail)));
+                        _pullRefresh();
             if (reload == null) return;
             if (reload) {
               _pullRefresh();
@@ -263,7 +264,7 @@ class _collectionPageState extends State<collectionPage> {
                   TextButton(
                     onPressed: () async {
                       try {
-                        await DeletePage().deleteTodo(id).then((value) {
+                        await DeletePage().deleteCollection(id).then((value) {
                           _pullRefresh();
                           setAlertTimeOut(ItemState.delete);
                           Navigator.pop(context, 'OK');

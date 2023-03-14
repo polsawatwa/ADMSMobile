@@ -5,6 +5,7 @@ urlpatterns = [
     # อยากให้ Homepage แสดงอะไร
     # ใช้วิธีการ JsonResponse
     path ('', Home),
+    path ('api/user/', user),
     path ('api/all-collection/', all_collection),
     path ('api/detail-collection/<int:TID>', detail_collection),
     path ('api/add-collection/', add_collection),

@@ -4,8 +4,17 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from myapp.serializers import UserSerializer
+from myapp.models import User
 from myapp.serializers import CollectionSerializer
 from myapp.models import Collection
+# GET User
+@api_view(['GET'])
+def user(request):
+    user = User.objects.all() #ดึงข้อมูลจาก model Collection
+    serializer = UserSerializer(user,many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 # GET Data
 @api_view(['GET'])
 def all_collection(request):
@@ -46,31 +55,20 @@ def update_collection(request, TID):
 
 
 # ใช้ Method DELETE ในการลบข้อมูล ตาม id ที่ส่งมา
-@api_view(['PUT'])
-def delete_collection(request, TID):
-    collect = Collection.objects.filter(status=1).get(id = TID)
-    if request.method == 'PUT':
-        data = {"status": 0}
-        serializer = CollectionSerializer(collect, data)
-        if serializer.is_valid():
-            serializer.save()
-            data['status'] = 'updated'
-            return Response(data = data, status = status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
-# @api_view(['DELETE'])
-# def delete_collection(request,TID):
-#   todo = Collection.objects.get(id=TID)
+@api_view(['DELETE'])
+def delete_collection(request,TID):
+    collect = Collection.objects.get(id=TID)
 
-#     if request.method == 'DELETE':
-#         delete = todo.delete()
-#         data = {}
-#         if delete:
-#             data ['status'] = 'deleted'
-#             statuscode = status.HTTP_200_OK
-#         else:
-#             data['status'] = 'failed'
-#             statuscode = status.HTTP_400_BAD_REQUEST
-#         return Response(data=data, status=statuscode)
+    if request.method == 'DELETE':
+        delete = collect.delete()
+        data = {}
+        if delete:
+            data ['status'] = 'deleted'
+            statuscode = status.HTTP_200_OK
+        else:
+            data['status'] = 'failed'
+            statuscode = status.HTTP_400_BAD_REQUEST
+        return Response(data=data, status=statuscode)
 
 data = [
     {
