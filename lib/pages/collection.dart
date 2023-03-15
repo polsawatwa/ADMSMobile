@@ -29,7 +29,7 @@ class _collectionPageState extends State<collectionPage> {
 
   /// Get Data
   Future getData() async {
-    final url = Uri.parse('http://127.0.0.1:8000/api/all-collection/');
+    final url = Uri.parse('http://localhost:8000/api/all-collection/');
     final response = await http.get(url);
     final result = jsonDecode(response.body);
     if (response.statusCode != 200) {
