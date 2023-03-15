@@ -7,6 +7,7 @@ import 'detail.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 enum PopupItem { update, delete }
 
