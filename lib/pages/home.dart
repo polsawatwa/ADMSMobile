@@ -14,8 +14,8 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 16.0),
                 child: Align(
                   alignment: AlignmentDirectional.topCenter,
-                  child: Image.network(
-                    'https://img.freepik.com/free-photo/landmark-pagoda-doi-inthanon-national-park-chiang-mai-thailand_335224-779.jpg?w=1060&t=st=1677748491~exp=1677749091~hmac=43a293e6df1690c4723539b4a117e7f50f9567da7bbf91c7a08bde1217cd3fe3',
+                  child: Image.asset(
+                    'assets/imageT1.jpg',
                     width: double.infinity,
                     height: 200,
                     fit: BoxFit.cover,
@@ -44,8 +44,8 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       children: [
-                        Image.network(
-                          'https://www.chillnaid.com/wp-content/uploads/2018/09/%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%98%E0%B8%B2%E0%B8%95%E0%B8%B8%E0%B8%9C%E0%B8%B2%E0%B8%8B%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%A7-1.jpg',
+                        Image.asset(
+                    'assets/imageT1.jpg',
                           width: 90,
                           height: 90,
                           fit: BoxFit.cover,
@@ -101,8 +101,8 @@ Text(
                   child: Card(
                     child: Column(
                       children: [
-                        Image.network(
-                          'https://inwfile.com/s-di/0mrq2i.jpg',
+                        Image.asset(
+                    'assets/imageT1.jpg',
                           width: double.infinity,
                           height: 55,
                           fit: BoxFit.cover,
@@ -142,8 +142,8 @@ Text(
                   child: Card(
                     child: Column(
                       children: [
-                        Image.network(
-                          'https://inwfile.com/s-di/0mrq2i.jpg',
+                        Image.asset(
+                    'assets/imageT1.jpg',
                           width: double.infinity,
                           height: 55,
                           fit: BoxFit.cover,
@@ -183,8 +183,8 @@ Text(
                   child: Card(
                     child: Column(
                       children: [
-                        Image.network(
-                          'https://inwfile.com/s-di/0mrq2i.jpg',
+                       Image.asset(
+                    'assets/imageT1.jpg',
                           width: double.infinity,
                           height: 55,
                           fit: BoxFit.cover,

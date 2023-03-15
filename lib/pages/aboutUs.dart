@@ -26,8 +26,8 @@ class _AboutPageState extends State<AboutPage> {
             children: [
               Container(
                 padding: EdgeInsets.all(1.0),
-                child: Image.network(
-                  'https://img.freepik.com/free-photo/landmark-pagoda-doi-inthanon-national-park-chiang-mai-thailand_335224-779.jpg?w=1060&t=st=1677748491~exp=1677749091~hmac=43a293e6df1690c4723539b4a117e7f50f9567da7bbf91c7a08bde1217cd3fe3',
+                child: Image.asset(
+                  'assets/imageT1.jpg',
                   width: 450,
                   height: 370,
                 ),

@@ -30,8 +30,8 @@ class _WelcomePageState extends State<WelcomePage> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 50),
-            Image.network(
-              'https://media.discordapp.net/attachments/803213415094681640/1077938339497398272/logo5.png?width=1038&height=456',
+            Image.asset(
+              'assets/logo.png',
               height: 150,
               width: 150,
             ),

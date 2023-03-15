@@ -34,8 +34,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            Image.network(
-              'https://cdn-icons-png.flaticon.com/512/4545/4545114.png',
+            Image.asset(
+              'assets/icons-login.png',
               height: 200,
               width: 200,
             ),
