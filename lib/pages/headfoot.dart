@@ -5,13 +5,17 @@ import 'home.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class CurvePage extends StatefulWidget {
+  final userType;
+  const CurvePage({Key? key, required this.userType}) : super(key: key);
   @override
   State<CurvePage> createState() => _CurvePageState();
 }
 
 class _CurvePageState extends State<CurvePage> {
+  @override
   int _currentIndex = 0;
-  final tabs = [HomePage(), collectionPage(), AboutPage()];
+  // bool userType_status = widget.userType;
+  final tabs = [HomePage(), collectionPage(userType: true,), AboutPage()];
 
   @override
   Widget build(BuildContext context) {

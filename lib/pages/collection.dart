@@ -14,7 +14,8 @@ enum PopupItem { update, delete }
 enum ItemState { create, update, delete }
 
 class collectionPage extends StatefulWidget {
-  const collectionPage({super.key});
+  final userType;
+  const collectionPage({Key? key, required this.userType}) : super(key: key);
 
   @override
   State<collectionPage> createState() => _collectionPageState();
@@ -22,7 +23,7 @@ class collectionPage extends StatefulWidget {
 
 class _collectionPageState extends State<collectionPage> {
   late dynamic numbersList;
-  bool userType = true;
+  bool userType_status = true;
   bool deleteNotification = false;
   bool createNotification = false;
   bool updateNotification = false;
@@ -33,6 +34,7 @@ class _collectionPageState extends State<collectionPage> {
     final url = Uri.parse('http://dekdee2.informatics.buu.ac.th:9090/api/all-collection/');
     final response = await http.get(url);
     final result = jsonDecode(response.body);
+    // final result = utf8.decode(response.bodyBytes);
     if (response.statusCode != 200) {
       throw Exception("Error Can not fetch data !!!");
     }
@@ -41,6 +43,7 @@ class _collectionPageState extends State<collectionPage> {
 
   @override
   void initState() {
+    userType_status = widget.userType;
     super.initState();
     getData();
   }
@@ -107,7 +110,7 @@ class _collectionPageState extends State<collectionPage> {
       // appBar: AppBar(
       //   title: const Text("Data Lists"),
       // ),
-      floatingActionButton: userType ? FloatingActionButton(
+      floatingActionButton: userType_status ? FloatingActionButton(
         onPressed: () async {
           final reload = await Navigator.push(context,
               MaterialPageRoute(builder: (context) => const AddPage()));
@@ -133,7 +136,7 @@ class _collectionPageState extends State<collectionPage> {
                 }
                 return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3),
+                      crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) {
                     return collectionData(
                       snapshot?.data[index]["id"],
@@ -192,7 +195,7 @@ class _collectionPageState extends State<collectionPage> {
                 sub_title,
                 maxLines: 2,
               ),
-              trailing: userType ? popupMenu(id, title, sub_title, image_url, detail) : null,
+              trailing: userType_status ? popupMenu(id, title, sub_title, image_url, detail) : null,
             ),
           ],
         ),

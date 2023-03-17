@@ -13,8 +13,7 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-       color: Color(0xFF7286D3),
-      
+      color: Color(0xFF7286D3),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: ListView(
@@ -45,19 +44,22 @@ class _WelcomePageState extends State<WelcomePage> {
               },
               child: Text(
                 'เข้าสู่ระบบ',
-                style: TextStyle(fontSize: 20, fontFamily: 'Prompt', color: Color.fromARGB(255, 255, 255, 255)),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Prompt',
+                    color: Color.fromARGB(255, 255, 255, 255)),
               ),
               style: ButtonStyle(
-                 fixedSize: MaterialStateProperty.all<Size>(
-      Size(200, 50),
-    ),
-                backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFFF6F00)),
+                fixedSize: MaterialStateProperty.all<Size>(
+                  Size(200, 50),
+                ),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Color(0xFFFF6F00)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                
               ),
             ),
             SizedBox(height: 20),
@@ -65,18 +67,18 @@ class _WelcomePageState extends State<WelcomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CurvePage()),
+                  MaterialPageRoute(builder: (context) => CurvePage(userType: false)),
                 );
               },
               child: Text(
                 'เข้าสู่ระบบโดยไม่มีบัญชี',
-                style: TextStyle(fontSize: 20, fontFamily: 'Prompt', color: Colors.black),
+                style: TextStyle(
+                    fontSize: 20, fontFamily: 'Prompt', color: Colors.black),
               ),
               style: ButtonStyle(
-                
-                 fixedSize: MaterialStateProperty.all<Size>(
-      Size(50, 50),
-    ),
+                fixedSize: MaterialStateProperty.all<Size>(
+                  Size(50, 50),
+                ),
                 backgroundColor:
                     MaterialStateProperty.all<Color>(Color(0xFFF9FBE7)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(

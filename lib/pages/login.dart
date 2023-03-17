@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                       setUsername(username.text);
                       setPassword(password.text);
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => CurvePage()));
+                          MaterialPageRoute(builder: (context) => CurvePage(userType: true,)));
                     });
                   } else {
                     print('Invalid username or password');
