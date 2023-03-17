@@ -5,17 +5,27 @@ import 'home.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class CurvePage extends StatefulWidget {
-  final userType;
+  final bool userType;
   const CurvePage({Key? key, required this.userType}) : super(key: key);
   @override
-  State<CurvePage> createState() => _CurvePageState();
+  State<CurvePage> createState() => _CurvePageState(userType);
 }
 
 class _CurvePageState extends State<CurvePage> {
-  @override
+  final bool userType;
+  _CurvePageState(this.userType);
   int _currentIndex = 0;
-  // bool userType_status = widget.userType;
-  final tabs = [HomePage(), collectionPage(userType: true,), AboutPage()];
+  late final List<Widget> tabs;
+
+  @override
+  void initState() {
+    super.initState();
+    tabs = [
+      HomePage(),
+      collectionPage(userType: userType),
+      AboutPage(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +39,10 @@ class _CurvePageState extends State<CurvePage> {
               height: 50,
             ),
             SizedBox(width: 8),
-            Text("ADMS",style: TextStyle(fontSize: 20, fontFamily: 'Prompt'),),        
+            Text(
+              "ADMS",
+              style: TextStyle(fontSize: 20, fontFamily: 'Prompt'),
+            ),
           ],
         ),
       ),

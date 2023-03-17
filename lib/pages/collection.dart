@@ -14,7 +14,7 @@ enum PopupItem { update, delete }
 enum ItemState { create, update, delete }
 
 class collectionPage extends StatefulWidget {
-  final userType;
+  final bool userType;
   const collectionPage({Key? key, required this.userType}) : super(key: key);
 
   @override
