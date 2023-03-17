@@ -25,10 +25,10 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.transparent,
           body: ListView(children: [
             Text(
-              'Login',
+              'Log in',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: Color.fromARGB(255, 255, 255, 255),
                 fontSize: 50,
                 fontFamily: 'Prompt',
               ),
@@ -36,8 +36,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Image.asset(
               'assets/icons-login.png',
-              height: 200,
-              width: 200,
+              height: 150,
+              width: 150,
             ),
             SizedBox(height: 30),
             TextField(

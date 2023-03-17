@@ -20,8 +20,8 @@ class _CurvePageState extends State<CurvePage> {
         backgroundColor: Theme.of(context).primaryColor,
         title: Row(
           children: [
-            Image.network(
-              'https://sv1.picz.in.th/images/2023/02/22/LyY9Ze.png',
+            Image.asset(
+              'assets/head.png',
               height: 50,
             ),
             SizedBox(width: 8),

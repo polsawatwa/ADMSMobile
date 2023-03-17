@@ -32,7 +32,7 @@ class _AddPageState extends State<AddPage> {
             TextField(
               controller: title,
               decoration: InputDecoration(
-                labelText: 'ชื่อ title',
+                labelText: 'ชื่อสถาปัตยกรรม',
                 border: OutlineInputBorder()
               ),
             ),
@@ -40,7 +40,7 @@ class _AddPageState extends State<AddPage> {
             TextField(
               controller: sub_title,
               decoration: InputDecoration(
-                labelText: 'ชื่อ sub_title',
+                labelText: 'บทบรรยายนำชม',
                 border: OutlineInputBorder()
               ),
             ),
@@ -48,7 +48,7 @@ class _AddPageState extends State<AddPage> {
             TextField(
               controller: image_url,
               decoration: InputDecoration(
-                labelText: 'ชื่อ image_url',
+                labelText: 'ลิงก์รูปภาพ',
                 border: OutlineInputBorder()
               ),
             ),
