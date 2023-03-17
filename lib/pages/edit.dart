@@ -115,7 +115,7 @@ class _UpdatePageState extends State<UpdatePage> {
   }
 
   Future updateCollection() async {
-    var url = Uri.http('dekdee2.informatics.buu.ac.th:9090', '/api/api/update-collection/$_v1');
+    var url = Uri.http('dekdee2.informatics.buu.ac.th:9090', '/api/update-collection/$_v1');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
         '{"title":"${collect_title.text}", "sub_title":"${collect_sub_title.text}", "image_url":"${collect_image_url.text}", "detail":"${collect_detail.text}"}';

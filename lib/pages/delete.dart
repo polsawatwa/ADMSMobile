@@ -8,7 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 class DeletePage {
   // const DeletePage({super.key});
   Future deleteCollection(int v1) async {
-    var url = Uri.http('dekdee2.informatics.buu.ac.th:9090', '/api/api/delete-collection/$v1');
+    var url = Uri.http('dekdee2.informatics.buu.ac.th:9090', '/api/delete-collection/$v1');
     Map<String, String> header = {"Content-type": "application/json"};
     var response = await http.delete(url, headers: header);
     print('------result-------');
