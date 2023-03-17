@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: team2_nginx
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    volumes:
+      - ./html/:/var/www/html
+      - ./nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+
+    ports:
+      - "9090:80"
+    links:
+      - "db"
+
+  php:
+    container_name: team2_php
+    image: peerasakp/php7-4
+    restart: unless-stopped
+    volumes:
+      - ./html/:/var/www/html
+    expose:
+      - "9000"
+    depends_on: 
+      - db
+
+
+  db:
+    container_name: team2_mariadb
+    image: mariadb:10.3
+    restart: unless-stopped
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - ./mariadb/initdb/:/docker-entrypoint-initdb.d
+      - ./mariadb/data/:/var/lib/mysql/
+    env_file:
+      - ./mariadb/db.env
+    environment:
+      - MARIADB_ROOT_PASSWORD=1234
+      - "MYSQL_ROOT_HOST=%"
+
+  phpmyadmin:
+    container_name: team2_phpmyadmin
+    image: phpmyadmin:5.0.4-apache
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=db
+
+  django:
+    container_name: team2_django
+    # Use the image that we built earlier
+    image: django
+    # Map port 8000 in the container to port 8000 on the host
+    ports:
+      - "8899:8000"
+    # Set the environment variables that your Django app needs (if any)
+    environment:
+      - DJANGO_DEBUG=False
+    # Set the command to run when the container starts
+    command: python3 manage.py runserver 0.0.0.0:8000
+    # Mount the current directory (where your code is located) as a volume in the container
+    volumes:
+      - ./DJANGO\WEBAPI:/

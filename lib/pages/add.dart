@@ -100,7 +100,7 @@ class _AddPageState extends State<AddPage> {
 
     Future postCollection() async {
     //http://10.80.74.246:8080/api/v3/user
-    var url = Uri.parse('http://localhost:8000/api/add-collection/');
+    var url = Uri.parse('http://dekdee2.informatics.buu.ac.th:9090/api/api/add-collection/');
     //ประเภทของ Data ที่เราจะส่งไป เป็นแบบ json
     Map<String, String> header = {"Content-type": "application/json"};
     //Data ที่จะส่ง

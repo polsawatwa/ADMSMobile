@@ -43,8 +43,8 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
                 controller: username,
                 decoration: InputDecoration(
-                  filled: true,
-    fillColor: Colors.white,
+                    filled: true,
+                    fillColor: Colors.white,
                     prefixIcon: Icon(Icons.account_circle),
                     labelText: 'Username',
                     border: OutlineInputBorder(
@@ -54,8 +54,9 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
                 controller: password,
                 obscureText: true,
-                decoration: InputDecoration(filled: true,
-    fillColor: Colors.white,
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
                     prefixIcon: Icon(Icons.key),
                     labelText: 'Password',
                     border: OutlineInputBorder(
@@ -66,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 // Send a GET request to the API endpoint to retrieve user data
                 var response = await http
-                    .get(Uri.parse('http://localhost:8000/api/user/'));
+                    .get(Uri.parse('http://dekdee2.informatics.buu.ac.th:9090/api/user'));
                 if (response.statusCode == 200) {
                   // If the request is successful, parse the response body
                   var data = jsonDecode(response.body);
@@ -86,32 +87,30 @@ class _LoginPageState extends State<LoginPage> {
                     });
                   } else {
                     print('Invalid username or password');
-                     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Wrong username or password.'),
-          backgroundColor: Colors.red,
-        ),
-        );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Wrong username or password.'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
                   }
                 } else {
-
                   print("wrong username or password");
                   print('Failed to retrieve user data from the API');
                 }
               },
-              
-              child:
-                  Text('เข้าสู่ระบบ', style: TextStyle(fontFamily: 'Prompt', fontSize: 20)),
+              child: Text('เข้าสู่ระบบ',
+                  style: TextStyle(fontFamily: 'Prompt', fontSize: 20)),
               style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  backgroundColor: MaterialStateProperty.all(Color(0xFFFF6F00)),
-                  padding: MaterialStateProperty.all(
-                      EdgeInsets.fromLTRB(50, 20, 50, 20)),
-                 ),
+                ),
+                backgroundColor: MaterialStateProperty.all(Color(0xFFFF6F00)),
+                padding: MaterialStateProperty.all(
+                    EdgeInsets.fromLTRB(50, 20, 50, 20)),
+              ),
             ),
             SizedBox(height: 15),
             ElevatedButton(
@@ -123,7 +122,8 @@ class _LoginPageState extends State<LoginPage> {
                 'ย้อนกลับ',
                 style: TextStyle(
                   fontFamily: 'Prompt',
-                  fontSize: 20,color: Colors.black,
+                  fontSize: 20,
+                  color: Colors.black,
                 ),
               ),
               style: ButtonStyle(
